@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 
 const leadSchema = new mongoose.Schema(
   {
+    owner:{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:'users'
+    },
     date: {
       type: String,
       required: true,

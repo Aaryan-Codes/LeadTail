@@ -1,6 +1,7 @@
 import { Button, Col, Form, Input, Modal, Row, Select, message } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { AddLead, UpdateLead } from "../../../API/leadAPIcalls";
+import { useSelector } from "react-redux";
 
 const LeadCenterForm = ({
   isLeadFormOpen,
@@ -15,11 +16,13 @@ const LeadCenterForm = ({
     setSelectedLead(null);
   };
 
+  const {user} = useSelector((state)=>state.user);
+
   const onFinish = async (data) => {
     try {
         let response = null;
         if(formType === 'add'){
-            response = await AddLead(data);
+            response = await AddLead({...data,owner:user._id});
         }else{
             response = await UpdateLead({...data,leadID:selectedLead._id});
         }
@@ -28,6 +31,7 @@ const LeadCenterForm = ({
             getData();
             message.success(response.message);
             setIsLeadFormOpen(false);
+            setSelectedLead(null);
         }else{
             message.error(response.message);
         }
@@ -35,6 +39,13 @@ const LeadCenterForm = ({
     } catch (error) {
         message.error(error.message);
     }
+  };
+
+  const validateMobileNumber = (_, value) => {
+    if (!value || value.length !== 10) {
+      return Promise.reject(new Error('Mobile number must be exactly 10 digits'));
+    }
+    return Promise.resolve();
   };
 
   return (
@@ -85,7 +96,9 @@ const LeadCenterForm = ({
                 htmlFor="phone"
                 name="phone"
                 className=""
-                rules={[{ required: true, message: "Enter client number" }]}
+                rules={[{ required: true, message: "Enter client number" },
+                  {validator:validateMobileNumber}
+                ]}
               >
                 <Input
                   id="phone"

@@ -3,22 +3,31 @@ import { GiFoxTail } from "react-icons/gi";
 import { Button, Form, Input, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { LoginUser } from "../../API/userAPIcalls";
+import { useDispatch } from "react-redux";
+import { setLoading } from "../../redux/loader.reducer";
 
 const Login = () => {
   
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogin = async (value) => {
     try {
-      const response = await LoginUser(value);
-      if(response.success){
-        message.success(response.message);
-        localStorage.setItem('token',response.token);
-        navigate('/');
-      }else{
-        message.error(response.message);
+      const res = await LoginUser(value);
+      console.log(res);
+      dispatch(setLoading(true));
+      if (res.success) {
+        message.success(res.message);
+
+        localStorage.setItem("token", res.token);
+        dispatch(setLoading(false));
+        window.location.href = "/";
+      } else {
+        dispatch(setLoading(true));
+        message.error(res.message);
       }
     } catch (error) {
+      dispatch(setLoading(true));
       console.log(error);
     }
   };

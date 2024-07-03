@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const authMiddleware = require("../Middlewares/authMiddleware");
 const Lead = require("../Models/LeadSchema");
 
 // Add lead
@@ -75,6 +76,25 @@ router.put('/delete-lead',async (req,res)=>{
             message:error.message
         })
     }
+})
+
+// get leads for a specific company
+router.get('/get-company-leads',authMiddleware ,async(req,res)=>{
+  try {
+    console.log(req.body);
+    const allLeads = await Lead.find({owner:req.body.userID});
+    console.log(allLeads);
+    res.send({
+      success:true,
+      message:'Leads fetched successfully',
+      data:allLeads
+    })
+  } catch (error) {
+    res.send({
+      success:false,
+      message:error.message
+    })
+  }
 })
 
 module.exports = router;

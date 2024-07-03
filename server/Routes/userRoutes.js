@@ -111,7 +111,7 @@ router.get('/confirm/:token',async (req,res)=>{
 
 // Token Verification For Session Management
 router.get("/get-current-user", authMiddleware, async (req, res) => {
-  const user = await User.findById(req.body.userUD).select("-password");
+  const user = await User.findById(req.body.userID).select("-password");
   res.send({
     success: true,
     message: "User Authorized",

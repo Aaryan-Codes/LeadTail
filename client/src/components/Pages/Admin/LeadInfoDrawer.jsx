@@ -26,12 +26,13 @@ const LeadInfoDrawer = ({isLeadInfoOpen,setIsLeadInfoOpen,selectedLead}) => {
             </Col>
 
             <Col className="flex flex-col gap-1" span={12}>
+            <p><b>Stage</b> : {selectedLead.stage}</p>
             <p><b>Source</b> : {selectedLead.source}</p>
             <p><b>Assigned to</b> : {selectedLead.assigned}</p>
-            <p><b>Stage</b> : {selectedLead.stage}</p>
+            
             </Col>
         </Row>
-        <Row>
+        <Row className="py-1">
             <p><b>Comments</b> : {selectedLead.comments}</p>
         </Row>
         

@@ -25,6 +25,10 @@ const UserSchema = new mongoose.Schema({
     verified:{
         type:Boolean,
         default:false
+    },
+    isAdmin:{
+        type:Boolean,
+        default:true
     }
 },{timestamps:true})
 

@@ -48,7 +48,7 @@ const verificationEmail = async (user, link) => {
     let message = {
       from: "aaryandev.test@zohomail.in",
       to: user.email,
-      subject: "Confirm your email at Dribbble",
+      subject: "Confirm your email at LeadTail",
       html: Mail,
     };
 
