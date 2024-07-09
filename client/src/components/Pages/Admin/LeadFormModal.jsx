@@ -2,6 +2,7 @@ import { Button, Col, Form, Input, Modal, Row, Select, message } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { AddLead, UpdateLead } from "../../../API/leadAPIcalls";
 import { useSelector } from "react-redux";
+import { Option } from "antd/es/mentions";
 
 const LeadCenterForm = ({
   isLeadFormOpen,
@@ -9,41 +10,42 @@ const LeadCenterForm = ({
   setSelectedLead,
   formType,
   setIsLeadFormOpen,
-  getData
+  getData,
 }) => {
   const handleCancel = () => {
     setIsLeadFormOpen(false);
     setSelectedLead(null);
   };
 
-  const {user} = useSelector((state)=>state.user);
+  const { user, employees } = useSelector((state) => state.user);
 
   const onFinish = async (data) => {
     try {
-        let response = null;
-        if(formType === 'add'){
-            response = await AddLead({...data,owner:user._id});
-        }else{
-            response = await UpdateLead({...data,leadID:selectedLead._id});
-        }
-        console.log(response);
-        if(response.success){
-            getData();
-            message.success(response.message);
-            setIsLeadFormOpen(false);
-            setSelectedLead(null);
-        }else{
-            message.error(response.message);
-        }
-        
+      let response = null;
+      if (formType === "add") {
+        response = await AddLead({ ...data, owner: user._id });
+      } else {
+        response = await UpdateLead({ ...data, leadID: selectedLead._id });
+      }
+      console.log(response);
+      if (response.success) {
+        getData();
+        message.success(response.message);
+        setIsLeadFormOpen(false);
+        setSelectedLead(null);
+      } else {
+        message.error(response.message);
+      }
     } catch (error) {
-        message.error(error.message);
+      message.error(error.message);
     }
   };
 
   const validateMobileNumber = (_, value) => {
     if (!value || value.length !== 10) {
-      return Promise.reject(new Error('Mobile number must be exactly 10 digits'));
+      return Promise.reject(
+        new Error("Mobile number must be exactly 10 digits")
+      );
     }
     return Promise.resolve();
   };
@@ -96,8 +98,9 @@ const LeadCenterForm = ({
                 htmlFor="phone"
                 name="phone"
                 className=""
-                rules={[{ required: true, message: "Enter client number" },
-                  {validator:validateMobileNumber}
+                rules={[
+                  { required: true, message: "Enter client number" },
+                  { validator: validateMobileNumber },
                 ]}
               >
                 <Input
@@ -185,14 +188,14 @@ const LeadCenterForm = ({
                   className="w-full"
                   placeholder="Select assigned to"
                   onChange={(e) => console.log(e)}
-                  options={[
-                    { value: "Unassigned", label: "Unassigned" },
-                    { value: "Person 1", label: "Person 1" },
-                    { value: "Person 2", label: "Person 2" },
-                    { value: "Person 3", label: "Person 3" },
-                    { value: "Person 4", label: "Person 4" },
-                  ]}
-                />
+                >
+                  {employees &&
+                    employees.map((emp) => (
+                      <Option value={emp.name} label={emp.name}>
+                        {emp.name}
+                      </Option>
+                    ))}
+                </Select>
               </Form.Item>
             </Col>
 
@@ -249,7 +252,7 @@ const LeadCenterForm = ({
               type="submit"
               className="px-4 py-2 bg-[#1677ff] text-white rounded-lg shadow-lg"
             >
-              {formType === 'add' ? "Add Lead" : "Update Lead"}
+              {formType === "add" ? "Add Lead" : "Update Lead"}
             </button>
             <button
               onClick={handleCancel}

@@ -5,6 +5,7 @@ const connectDB = require('./Utils/DB');
 const PORT = process.env.PORT
 const userRoutes = require('./Routes/userRoutes');
 const leadRoutes = require('./Routes/leadRoutes');
+const employeeRoutes = require('./Routes/employeeRoutes');
 const cors = require('cors');
 
 app.get('/',(req,res)=>{
@@ -18,6 +19,7 @@ app.use(cors());
 
 app.use('/api/users',userRoutes);
 app.use('/api/leads',leadRoutes);
+app.use('/api/employees',employeeRoutes);
 
 connectDB().then(()=>{
     app.listen(PORT,()=>{

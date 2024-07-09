@@ -27,21 +27,21 @@ const items = [
     icon: <DesktopOutlined />,
   },
   {
-    key: "Settings",
-    label: "Settings",
-    icon: <SettingOutlined />,
-    children: [
-      {
-        key: "User Management",
-        label: <Link to="/create-user">Users</Link>,
-        icon: <TeamOutlined />,
-      },
-      {
-        key: "Account Settings",
-        label: <Link to={"/my-account"}>Account</Link>,
-        icon: <UserOutlined />,
-      },
-    ],
+    key: "Employees",
+    label: <Link to='/employees'>User</Link>,
+    icon: <TeamOutlined />,
+    // children: [
+    //   {
+    //     key: "Employees",
+    //     label: <Link to="/settings/employees">Users</Link>,
+    //     icon: <TeamOutlined />,
+    //   },
+    //   {
+    //     key: "Account",
+    //     label: <Link to="settings/my-account">Account</Link>,
+    //     icon: <UserOutlined />,
+    //   },
+    // ],
   },
   {
     key: "Logout",

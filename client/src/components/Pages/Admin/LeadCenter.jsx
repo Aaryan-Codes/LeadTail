@@ -10,10 +10,11 @@ import { GetCompanyLeads } from "../../../API/leadAPIcalls";
 import moment from "moment";
 import DeleteLeadModal from "./DeleteLeadModal";
 import LeadInfoDrawer from "./LeadInfoDrawer";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Option } from "antd/es/mentions";
 
 const LeadCenter = () => {
-  const { user } = useSelector((state) => state.user);
+  const { user,employees } = useSelector((state) => state.user);
   const [selectedLead, setSelectedLead] = useState(null);
   const [allLeads, setAllLeads] = useState(null);
   const [isLeadFormOpen, setIsLeadFormOpen] = useState(false);
@@ -27,9 +28,12 @@ const LeadCenter = () => {
     stage: "",
   });
 
+  const dispatch = useDispatch();
+
   const getData = async () => {
     try {
       const response = await GetCompanyLeads({ owner: user._id });
+      
       if (response.success) {
         const allLeads = response.data.map((item) => ({
           ...item,
@@ -45,6 +49,8 @@ const LeadCenter = () => {
       // message.error(error.message);
     }
   };
+
+  
 
   const filterLeads = () => {
     let filtered = allLeads;
@@ -77,9 +83,13 @@ const LeadCenter = () => {
     getData();
   }, [user]);
 
+  
+
   useEffect(() => {
     filterLeads();
   }, [selectedFilters, allLeads]);
+
+  
 
   const columns = [
     {
@@ -200,15 +210,12 @@ const LeadCenter = () => {
             style={{ minWidth: "120px" }}
             placeholder="Select assigned to"
             onChange={(value) => handleFilterChange("assigned", value)}
-            options={[
-              { value: "All", label: "All" },
-              { value: "Unassigned", label: "Unassigned" },
-              { value: "Person 1", label: "Person 1" },
-              { value: "Person 2", label: "Person 2" },
-              { value: "Person 3", label: "Person 3" },
-              { value: "Person 4", label: "Person 4" },
-            ]}
-          />
+            
+          >
+            {employees && employees.map((emp)=>(
+              <Option value={emp.name} label={emp.name}>{emp.name}</Option>
+            ))}
+          </Select>
 
           <Select
             id="stage"

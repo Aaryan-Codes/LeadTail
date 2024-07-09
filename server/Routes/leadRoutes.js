@@ -83,7 +83,7 @@ router.get('/get-company-leads',authMiddleware ,async(req,res)=>{
   try {
     console.log(req.body);
     const allLeads = await Lead.find({owner:req.body.userID});
-    console.log(allLeads);
+    // console.log(allLeads);
     res.send({
       success:true,
       message:'Leads fetched successfully',
