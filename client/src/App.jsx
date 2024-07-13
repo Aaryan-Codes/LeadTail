@@ -1,5 +1,4 @@
 import './App.css'
-import HomePage from './components/Pages/HomePage'
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import Register from './components/Pages/Register';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -46,7 +45,7 @@ function App() {
       
       <Routes>
 
-        <Route path='/*' element={<ProtectedRoute><HomePage/></ProtectedRoute>} />
+        <Route path='/*' element={<ProtectedRoute><Dashboard/></ProtectedRoute>} />
         <Route path='/login' element={<Login/>}/>
         <Route path='/register' element={<Register/>} />
         <Route path='/leadcenter' element={<ProtectedRoute><LeadCenter/></ProtectedRoute>} />
