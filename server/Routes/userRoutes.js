@@ -99,7 +99,7 @@ router.get('/confirm/:token',async (req,res)=>{
     //   message:"Email Verification Successful!"
     // })
 
-    res.redirect('http://localhost:5173/login');
+    res.redirect('https://leadtail.onrender.com/login');
 
   } catch (error) {
     res.send({
