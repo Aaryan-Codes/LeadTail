@@ -34,7 +34,7 @@ router.post("/signup", async (req, res) => {
 
       await token.save();
 
-      const link = `http://localhost:5000/api/users/confirm/${token.token}`;
+      const link = `https://leadtail.onrender.com/api/users/confirm/${token.token}`;
 
       await verificationEmail(newUser,link);
 
