@@ -40,11 +40,8 @@ function App() {
 
   return (
     <div>
-      <Spin className={`fixed top-[45%] left-[52%] z-[9] ${isLoading ? "": "hidden"}`} indicator={<LoadingOutlined spin />} size="large" />
       <BrowserRouter>
-      
       <Routes>
-
         <Route path='/*' element={<ProtectedRoute><Dashboard/></ProtectedRoute>} />
         <Route path='/login' element={<Login/>}/>
         <Route path='/register' element={<Register/>} />
