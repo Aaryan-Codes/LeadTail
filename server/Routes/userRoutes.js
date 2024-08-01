@@ -99,7 +99,7 @@ router.get('/confirm/:token',async (req,res)=>{
     //   message:"Email Verification Successful!"
     // })
 
-    res.redirect('https://leadtail.onrender.com/login');
+    res.redirect('https://lead-tail.vercel.app/login');
 
   } catch (error) {
     res.send({
